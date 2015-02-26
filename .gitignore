@@ -12,15 +12,12 @@
 !/log/.keep
 /tmp
 
-
 *~
 \#*#
 .#*
 .~*#
 *.sw*
 etc
-log
-tmp
 Gemfile.lock
 .ruby-version
 .ruby-gemset
