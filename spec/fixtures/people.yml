@@ -1,0 +1,25 @@
+person_one:
+  id: 1
+  year_of_birth: 1917
+  first_name: Norbert
+  last_name: Norbertsson
+person_two:
+  id: 2
+  year_of_birth: 1981
+  first_name: Otto
+  last_name: von Ottosson
+person_trhee:
+  id: 3
+  year_of_birth: 1973
+  first_name: Sven
+  last_name: Poppelquistström
+person_four:
+  id: 4
+  year_of_birth: 1965
+  first_name: Hermann
+  last_name: von Schinkendinken
+person_five:
+  id: 5
+  year_of_birth: 1980
+  first_name: Ahmet
+  last_name: Svensson
