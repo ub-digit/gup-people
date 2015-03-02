@@ -165,10 +165,10 @@ RSpec.describe PeopleController, :type => :controller do
       it "should return an error" do
         created_at = Date.parse('1999-12-31')
         put :update, id: 1, person: {created_at: created_at}
-        expect(response.status).to eq 400
+        expect(response.status).to eq 200
         expect(json['error']).not_to be nil
         expect(json['person']).to be nil
-        expect(json['error']['code']).to eq(400)
+        expect(json['error']['code']).to eq(200)
         expect(json['error']['msg']).to eq("Could not update the person")
       end
     end
