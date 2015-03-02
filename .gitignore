@@ -18,7 +18,7 @@
 .~*#
 *.sw*
 etc
-Gemfile.lock
+#Gemfile.lock
 .ruby-version
 .ruby-gemset
 .DS_Store
