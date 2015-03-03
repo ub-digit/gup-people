@@ -162,14 +162,16 @@ RSpec.describe PeopleController, :type => :controller do
       end
     end
     context "when created at is tampered with" do
-      it "should return an error" do
-        created_at = Date.parse('1999-12-31')
-        put :update, id: 1, person: {created_at: created_at}
+      it "should ignore the created_at param" do
+        created_at = DateTime.parse('1999-12-31 23:59:59')
+        last_name = 'von Oben'
+        put :update, id: 1, person: {created_at: created_at, last_name: last_name}
         expect(response.status).to eq 200
-        expect(json['error']).not_to be nil
-        expect(json['person']).to be nil
-        expect(json['error']['code']).to eq(200)
-        expect(json['error']['msg']).to eq("Could not update the person")
+        expect(json['error']).to be nil
+        expect(json['person']).not_to be nil
+        expect((DateTime.parse(json['person']['created_at'])).year).to eq(Time.now().year)
+        expect(json['person']['last_name']).to eq(last_name)
+
       end
     end
     context "when person is not found" do

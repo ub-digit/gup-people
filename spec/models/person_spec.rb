@@ -18,12 +18,6 @@ RSpec.describe Person, :type => :model do
         old_name = p1.first_name
         p1.first_name = ""
         expect(p1.valid?).to be_falsey
-        #pp "#{p1.errors.messages}"
-        #pp "================"
-        #pp "#{I18n.translate('errors.messages.taken')}"
-        #pp "#{errors.messages}"
-        #pp "================"
-        #expect(p1.first_name).to eq(old_name)
       end
     end
     context "when last name is blank" do

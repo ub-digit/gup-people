@@ -12,7 +12,9 @@ class Person < ActiveRecord::Base
       id: id,
       year_of_birth: year_of_birth,
       first_name: first_name,
-      last_name: last_name
+      last_name: last_name,
+      created_at: created_at,
+      updated_at: updated_at
     }
   end
 end

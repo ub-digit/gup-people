@@ -40,11 +40,7 @@ class PeopleController < ApplicationController
     obj = Person.find_by id: id
 
     if obj
-      #obj.update_attributes(params[:person].to_hash)
-      obj.update_attributes(parameters.permit(:first_name, :last_name, :year_of_birth))
-      # TODO Put in some more code to check attributes in JSON
-      # We dont want to change each and every attribute like created_by
-      if obj.save
+      if obj.update(parameters.permit(:first_name, :last_name, :year_of_birth))
         @response[:person] = obj.as_json
       else
         generate_error(400, "Could not update the person", obj.errors.messages)
@@ -54,4 +50,5 @@ class PeopleController < ApplicationController
     end
     render_json
   end
+
 end
