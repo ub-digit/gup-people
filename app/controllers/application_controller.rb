@@ -11,18 +11,20 @@ class ApplicationController < ActionController::Base
   end
 
   def render_json(status = 200)
-    # If successful, render given status
+    # If successful, render object as JSON
     if @response[:error].nil?
       render json: @response, status: status
     else
-      # If not successful, render with status from ErrorCodes module
+      # If not successful, render error as JSON
       render json: @response, status: @response[:error][:code]
     end
   end
 
   # Generates an error object from code, message and error list
+  # If the msg parameter is not provided the HTTP_STATUS message will be used.
+  # If no specific HTTP Coce is given then 400, Bad Request will be used.
   def generate_error(http_code = 400, msg = "", error_list = nil)
-    #Rack::Utils::HTTP_STATUS_CODES[242]
+
     if msg == ""
       msg = code_to_message(http_code)
     end
@@ -34,11 +36,4 @@ class ApplicationController < ActionController::Base
     Rack::Utils::HTTP_STATUS_CODES[http_code]
   end
 
-  def symbol_to_code(sumbol = :bad_request)
-    Rack::Utils::SYMBOL_TO_STATUS_CODE
-  end
-
-  #def error_code(code = :bad_request) do
-  #
-  #end
 end

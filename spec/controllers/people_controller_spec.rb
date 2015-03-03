@@ -82,15 +82,17 @@ RSpec.describe PeopleController, :type => :controller do
     end
 
     context "when first name is missing" do
-      it "should return an error" do
+      it "should create and return a representation for that created person" do
         last_name = 'Andersson'
         year_of_birth = 1970
         post :create, person: {last_name: last_name, year_of_birth: year_of_birth}
-        expect(response.status).to eq 400
-        expect(json['error']).not_to be nil
-        expect(json['person']).to be nil
-        expect(json['error']['code']).to eq(400)
-        expect(json['error']['msg']).to eq("Could not create the person")
+        expect(response.status).to eq 201
+        expect(json['error']).to be nil
+        expect(json['person']).not_to be nil
+        expect(json['person']['id']).not_to be nil
+        expect(json['person']['first_name']).to eq(nil)
+        expect(json['person']['last_name']).to eq(last_name)
+        expect(json['person']['year_of_birth']).to eq(year_of_birth)
       end
     end
 
@@ -108,21 +110,23 @@ RSpec.describe PeopleController, :type => :controller do
     end
 
     context "when year of birth is missing" do
-      it "should return an error" do
+      it "should create and return a representation for that created person" do
         first_name = 'Anders'
         last_name = 'Andersson'
         post :create, person: {first_name: first_name, last_name: last_name}
-        expect(response.status).to eq 400
-        expect(json['error']).not_to be nil
-        expect(json['person']).to be nil
-        expect(json['error']['code']).to eq(400)
-        expect(json['error']['msg']).to eq("Could not create the person")
+        expect(response.status).to eq 201
+        expect(json['error']).to be nil
+        expect(json['person']).not_to be nil
+        expect(json['person']['id']).not_to be nil
+        expect(json['person']['first_name']).to eq(first_name)
+        expect(json['person']['last_name']).to eq(last_name)
+        expect(json['person']['year_of_birth']).to eq(nil)
       end
     end
   end
 
   describe "update one person" do
-    context "when all parameters changes" do
+    context "when all parameters change" do
       it "should cupdate person and return json with new state of the person" do
         first_name = 'Anders'
         last_name = 'Andersson'
@@ -150,15 +154,43 @@ RSpec.describe PeopleController, :type => :controller do
         expect(json['person']['year_of_birth']).to eq(1917)
       end
     end
-    context "when first name is deleted" do
+    context "when last name is deleted" do
       it "should return an error" do
-        first_name = ''
-        put :update, id: 1, person: {first_name: first_name}
+        last_name = ''
+        put :update, id: 1, person: {last_name: last_name}
         expect(response.status).to eq 400
         expect(json['error']).not_to be nil
         expect(json['person']).to be nil
         expect(json['error']['code']).to eq(400)
         expect(json['error']['msg']).to eq("Could not update the person")
+      end
+    end
+    context "when first name is deleted" do
+      it "should update and return person with the new first name" do
+        p1 = people(:person_one)
+        first_name = ''
+        put :update, id: 1, person: {first_name: first_name}
+        expect(response.status).to eq 200
+        expect(json['error']).to be nil
+        expect(json['person']).not_to be nil
+        expect(json['person']['id']).not_to be nil
+        expect(json['person']['first_name']).to eq(first_name)
+        expect(json['person']['last_name']).to eq(p1.last_name)
+        expect(json['person']['year_of_birth']).to eq(p1.year_of_birth)
+      end
+    end
+    context "when year of birth is deleted" do
+      it "should update and return person with the new year_of_birth" do
+        p1 = people(:person_one)
+        new_year_of_birth = nil
+        put :update, id: 1, person: {year_of_birth: new_year_of_birth}
+        expect(response.status).to eq 200
+        expect(json['error']).to be nil
+        expect(json['person']).not_to be nil
+        expect(json['person']['id']).not_to be nil
+        expect(json['person']['first_name']).to eq(p1.first_name)
+        expect(json['person']['last_name']).to eq(p1.last_name)
+        expect(json['person']['year_of_birth']).to eq(new_year_of_birth)
       end
     end
     context "when created at is tampered with" do
