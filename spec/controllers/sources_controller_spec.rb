@@ -21,8 +21,8 @@ RSpec.describe SourcesController, :type => :controller do
 
     context "when there is a list of sources to be found" do
       it "should return that list of sources" do
-        s1 = source(:xkonto)
-        s2 = source(:orcid)
+        s1 = sources(:xkonto)
+        s2 = sources(:orcid)
         get :index
         expect(json['sources'][0]['id']).to eq(s1.id)
         expect(json['sources'][0]['name']).to eq(s1.name)
@@ -62,7 +62,7 @@ RSpec.describe SourcesController, :type => :controller do
 
     context "when the source exist" do
       it "should return that source" do
-        s1 = source(:xkonto)
+        s1 = sources(:xkonto)
         get :show, id: s1.id
         expect(response.status).to eq(200)
         expect(json['error']).to be nil
@@ -86,7 +86,7 @@ RSpec.describe SourcesController, :type => :controller do
 
     context "when properties are changed" do
       it "should update source and return json with new state of the source" do
-        s1 = source(:xkonto)
+        s1 = sources(:xkonto)
         new_name = 'xyzkonto'
         post :update, id: s1.id, source: {name: new_name}
         expect(response.status).to eq 200
@@ -96,7 +96,7 @@ RSpec.describe SourcesController, :type => :controller do
         expect(json['source']['name']).to eq(new_name)
       end
       it "should ignore the created_at param" do
-        s1 = source(:xkonto)
+        s1 = sources(:xkonto)
         new_name = 'xyzkonto'
         new_created_at = DateTime.parse('1999-12-31 23:59:59')
         put :update, id: 1, source: {created_at: new_created_at, name: new_name}
@@ -110,7 +110,7 @@ RSpec.describe SourcesController, :type => :controller do
 
     context "when required property is deleted" do
       it "should return an error" do
-        s1 = source(:xkonto)
+        s1 = sources(:xkonto)
         new_name = ''
         put :update, id: s1.id, source: {name: new_name}
         expect(response.status).to eq 400
