@@ -15,6 +15,7 @@ RSpec.describe PeopleController, :type => :controller do
         end
 
         get :index
+        pp json
         expect(json['people'].empty?).to be_truthy
       end
     end
@@ -22,6 +23,7 @@ RSpec.describe PeopleController, :type => :controller do
     context "when there is a list of people to be found" do
       it "should return that list of people" do
         get :index
+        pp json
         expect(json['people'][0]['id']).to eq(1)
         expect(json['people'][1]['first_name']).to eq('Otto')
         expect(json['people'][4]['year_of_birth']).to eq(1980)
@@ -195,14 +197,18 @@ RSpec.describe PeopleController, :type => :controller do
     end
     context "when created at is tampered with" do
       it "should ignore the created_at param" do
-        created_at = DateTime.parse('1999-12-31 23:59:59')
-        last_name = 'von Oben'
-        put :update, id: 1, person: {created_at: created_at, last_name: last_name}
+        #created_at = DateTime.parse('1999-12-31 23:59:59')
+        p1 = people(:person_one)
+        new_created_at = Time.parse('1999-12-31 23:59:59.000Z')
+        #Time.parse("2015-01-01 00:00:00.000000 -04:00")
+        new_last_name = 'von Oben'
+        put :update, id: p1.id, person: {created_at: new_created_at, last_name: new_last_name}
         expect(response.status).to eq 200
         expect(json['error']).to be nil
         expect(json['person']).not_to be nil
-        expect((DateTime.parse(json['person']['created_at'])).year).to eq(Time.now().year)
-        expect(json['person']['last_name']).to eq(last_name)
+        #expect((DateTime.parse(json['person']['created_at'])).year).to eq(Time.now().year)
+        expect(json['person']['created_at']).to eq("2015-01-01T12:00:00.000Z")
+        expect(json['person']['last_name']).to eq(new_last_name)
 
       end
     end

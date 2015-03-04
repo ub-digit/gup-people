@@ -3,23 +3,50 @@ person_one:
   year_of_birth: 1917
   first_name: Norbert
   last_name: Norbertsson
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z
 person_two:
   id: 2
   year_of_birth: 1981
   first_name: Otto
   last_name: von Ottosson
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z
 person_trhee:
   id: 3
   year_of_birth: 1973
   first_name: Sven
   last_name: Poppelquistström
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z
 person_four:
   id: 4
   year_of_birth: 1965
   first_name: Hermann
   last_name: von Schinkendinken
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z
 person_five:
   id: 5
   year_of_birth: 1980
   first_name: Ahmet
   last_name: Svensson
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z
+
+#<% 10.times do |xn| %>
+#<% n=xn+6 %>
+#order_<%= n %>:
+#  id: <%= n %>
+ # first_name: <%= "Disk_#{n}" %>
+ # last_name: <%= "Svensson_#{n}" %>
+ # year_of_birth: <%= "#{1980 + n}" %>
+#<% end %>
+
+person_six:
+  id: 6
+  year_of_birth: 1970
+  first_name: Johan
+  last_name: Andersson von Geijer
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z

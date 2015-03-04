@@ -1,0 +1,40 @@
+i1:
+  id: 1
+  person_id: 1
+  source_id: 1
+  value: xnornoorno
+i2:
+  id: 2
+  person_id: 1
+  source_id: 2
+  value: orcid.org/0000-1000-1234-0001
+i3:
+  id: 3
+  person_id: 2
+  source_id: 1
+  value: xottootto
+i4:
+  id: 4
+  person_id: 2
+  source_id: 2
+  value: orcid.org/0000-1000-1234-0002
+i5:
+  id: 5
+  person_id: 3
+  source_id: 1
+  value: xsvenne
+i6:
+  id: 6
+  person_id: 3
+  source_id: 2
+  value: orcid.org/0000-1000-1234-0003
+i7:
+  id: 7
+  person_id: 6
+  source_id: 1
+  value: xanjoo
+i8:
+  id: 8
+  person_id: 6
+  source_id: 2
+  value: orcid.org/0000-0003-0460-6600

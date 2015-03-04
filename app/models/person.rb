@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  has_many :names
+  has_many :alternative_names
   has_many :identifiers
   has_many :sources, :through => :identifiers
 
@@ -12,7 +12,14 @@ class Person < ActiveRecord::Base
       first_name: first_name,
       last_name: last_name,
       created_at: created_at,
-      updated_at: updated_at
+      updated_at: updated_at,
+      identifiers: identifiers.as_json,
+      alternative_names: alternative_names.as_json
     }
   end
 end
+
+# identifiers: [
+#         {name: :orcid, value: 'orcid.org/0000-0003-0460-6600'},
+#         {name: :xkonto, value: 'xanjoo'}
+#       ]
