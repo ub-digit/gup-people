@@ -24,19 +24,17 @@ class PeopleController < ApplicationController
 
       @people = @people.where(
         "(((lower(first_name) LIKE ?)
-            OR (lower(last_name) LIKE ?))
-            AND (affiliated = true))
-      OR (id IN (?) AND (affiliated = true))
-      OR (id IN (?))",
-          "%#{st}%",
-          "%#{st}%",
-          alternative_name_hit,
-          source_hit
+          OR (lower(last_name) LIKE ?))
+          AND (affiliated = true))
+        OR (id IN (?) AND (affiliated = true))
+        OR (id IN (?))",
+        "%#{st}%",
+        "%#{st}%",
+        alternative_name_hit,
+        source_hit
       )
 
-      logger.info "========================="
-      logger.info @people.to_sql
-      logger.info "========================="
+      logger.info "SQL for search gup-people: #{@people.to_sql}"
     end
 
     @response[:people] = @people.as_json
