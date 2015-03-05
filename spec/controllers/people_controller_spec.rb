@@ -31,6 +31,86 @@ RSpec.describe PeopleController, :type => :controller do
     end
   end
 
+  describe "search people" do
+    context "when search_term is johan" do
+      it "should get hit" do
+        p = people(:person_six)
+        get :index, {:token => @token, :search_term => 'johan'}
+        pp "#{json}"
+        expect(json).to have_key('people')
+        expect(json['people'].to_a.find { |person| person['id'] == p.id }).not_to be_nil
+      end
+    end
+
+    context "when seach_term is not to be found" do
+      it "should get an empty people array in response" do
+        p = people(:person_six)
+        get :index, {:token => @token, :search_term => 'qqqqqqqqqqqqqq'}
+        pp json
+        expect(json).to have_key('people')
+        expect(json['people'].to_a.count).to eq(0)
+      end
+    end
+
+    context "when person has a name match" do
+      context "and is not affiliated" do
+        it "should not be in hit list" do
+          p = people(:person_seven)
+          get :index, {:token => @token, :search_term => 'Gregerquist'}
+          expect(json).to have_key('people')
+          expect(json['people'].to_a.find { |person| person['id'] == p.id }).to be_nil
+        end
+      end
+      context "and is affiliated" do
+        it "should be in hit list" do
+          p = people(:person_eight)
+          get :index, {:token => @token, :search_term => 'Gregerquist'}
+          expect(json).to have_key('people')
+          expect(json['people'].to_a.find { |person| person['id'] == p.id }).not_to be_nil
+        end
+      end
+    end
+
+    context "when person has an alternative_name match" do
+      context "and is not affiliated" do
+        it "should not be in hit list" do
+          p = people(:person_seven)
+          get :index, {:token => @token, :search_term => 'Gregerkvist'}
+          expect(json).to have_key('people')
+          expect(json['people'].to_a.find { |person| person['id'] == p.id }).to be_nil
+        end
+      end
+      context "and is affiliated" do
+        it "should be in hit list" do
+          p = people(:person_eight)
+          get :index, {:token => @token, :search_term => 'Gregerkvist'}
+          expect(json).to have_key('people')
+          expect(json['people'].to_a.find { |person| person['id'] == p.id }).not_to be_nil
+        end
+      end
+    end
+
+    context "when person has a xkonto match" do
+      context "and is not affiliated" do
+        it "should not be in hit list" do
+          p = people(:person_nine)
+          get :index, {:token => @token, :search_term => 'xaaaaa'}
+          expect(json).to have_key('people')
+          expect(json['people'].to_a.find { |person| person['id'] == p.id }).not_to be_nil
+        end
+      end
+      context "and is affiliated" do
+        it "should be in hit list" do
+          p = people(:person_ten)
+          get :index, {:token => @token, :search_term => 'xbbbbb'}
+          expect(json).to have_key('people')
+          expect(json['people'].to_a.find { |person| person['id'] == p.id }).not_to be_nil
+        end
+      end
+    end
+  end
+
+
   describe "get one person" do
     context "when the specific person exist" do
       it "should return that person" do

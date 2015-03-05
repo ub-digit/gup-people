@@ -1,8 +1,45 @@
 class PeopleController < ApplicationController
-  def index
-    objs = Person.all
 
-    @response[:people] = objs.as_json
+  # search first_name, last_name, alternative_names if xkonto or orcid or affiliated
+  # search in xkonto
+  # search in orcid
+  def index
+    search_term = params[:search_term] || ''
+
+    @people = Person.all
+
+    if search_term.present?
+      st = search_term.downcase
+
+      alternative_name_hit = AlternativeName.where(
+        "(lower(first_name) LIKE ?)
+        OR (lower(last_name) LIKE ?)",
+        "%#{st}%", "%#{st}%"
+      ).select(:person_id)
+
+      source_hit = Identifier.where(
+        "lower(value) LIKE ?",
+        "%#{st}%"
+      ).select(:person_id)
+
+      @people = @people.where(
+        "(((lower(first_name) LIKE ?)
+            OR (lower(last_name) LIKE ?))
+            AND (affiliated = true))
+      OR (id IN (?) AND (affiliated = true))
+      OR (id IN (?))",
+          "%#{st}%",
+          "%#{st}%",
+          alternative_name_hit,
+          source_hit
+      )
+
+      logger.info "========================="
+      logger.info @people.to_sql
+      logger.info "========================="
+    end
+
+    @response[:people] = @people.as_json
     render_json
   end
 

@@ -3,6 +3,7 @@ person_one:
   year_of_birth: 1917
   first_name: Norbert
   last_name: Norbertsson
+  affiliated: false
   created_at: 2015-01-01 12:00:00.000000000 Z
   updated_at: 2015-01-01 12:00:00.000000000 Z
 person_two:
@@ -10,6 +11,7 @@ person_two:
   year_of_birth: 1981
   first_name: Otto
   last_name: von Ottosson
+  affiliated: false
   created_at: 2015-01-01 12:00:00.000000000 Z
   updated_at: 2015-01-01 12:00:00.000000000 Z
 person_trhee:
@@ -17,6 +19,7 @@ person_trhee:
   year_of_birth: 1973
   first_name: Sven
   last_name: Poppelquistström
+  affiliated: false
   created_at: 2015-01-01 12:00:00.000000000 Z
   updated_at: 2015-01-01 12:00:00.000000000 Z
 person_four:
@@ -24,6 +27,7 @@ person_four:
   year_of_birth: 1965
   first_name: Hermann
   last_name: von Schinkendinken
+  affiliated: false
   created_at: 2015-01-01 12:00:00.000000000 Z
   updated_at: 2015-01-01 12:00:00.000000000 Z
 person_five:
@@ -31,6 +35,7 @@ person_five:
   year_of_birth: 1980
   first_name: Ahmet
   last_name: Svensson
+  affiliated: false
   created_at: 2015-01-01 12:00:00.000000000 Z
   updated_at: 2015-01-01 12:00:00.000000000 Z
 
@@ -48,5 +53,43 @@ person_six:
   year_of_birth: 1970
   first_name: Johan
   last_name: Andersson von Geijer
+  affiliated: true
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z
+
+person_seven:
+  id: 7
+  year_of_birth: 1970
+  first_name: Greger
+  last_name: Gregerquist
+  affiliated: false
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z
+
+person_eight:
+  id: 8
+  year_of_birth: 1970
+  first_name: Johan
+  last_name: Gregerquist
+  affiliated: true
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z
+
+
+person_nine:
+  id: 9
+  year_of_birth: 1970
+  first_name: Adolf
+  last_name: Adolfsson
+  affiliated: false
+  created_at: 2015-01-01 12:00:00.000000000 Z
+  updated_at: 2015-01-01 12:00:00.000000000 Z
+
+person_ten:
+  id: 10
+  year_of_birth: 1970
+  first_name: Beda
+  last_name: Bedasdottir
+  affiliated: true
   created_at: 2015-01-01 12:00:00.000000000 Z
   updated_at: 2015-01-01 12:00:00.000000000 Z
