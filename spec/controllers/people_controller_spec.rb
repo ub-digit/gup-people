@@ -205,6 +205,22 @@ RSpec.describe PeopleController, :type => :controller do
         expect(json['person']['year_of_birth']).to eq(nil)
       end
     end
+
+    context "when full json is provided" do
+      it "should create and return a representation for that created person" do
+        first_name = 'Anders'
+        last_name = 'Andersson'
+        post :create, person: {first_name: first_name, last_name: last_name, alternative_names:[], identifiers:[]}
+        pp "Create Person #{json}"
+        expect(response.status).to eq 201
+        expect(json['error']).to be nil
+        expect(json['person']).not_to be nil
+        expect(json['person']['id']).not_to be nil
+        expect(json['person']['first_name']).to eq(first_name)
+        expect(json['person']['last_name']).to eq(last_name)
+        expect(json['person']['year_of_birth']).to eq(nil)
+      end
+    end
   end
 
   describe "update one person" do
@@ -303,6 +319,39 @@ RSpec.describe PeopleController, :type => :controller do
         expect(json['person']).to be nil
         expect(json['error']['code']).to eq(404)
         expect(json['error']['msg']).to eq("Could not find the person to update")
+      end
+    end
+
+    context "when full json is provided" do
+      it "should update the person and not touch the identifiers or alternative_names" do
+        p1 = people(:person_six)
+        first_name = ''
+        put :update, id: p1.id, person: {first_name: first_name, alternatve_names:[], identifiers:[]}
+        expect(response.status).to eq 200
+        expect(json['error']).to be nil
+        expect(json['person']).not_to be nil
+        expect(json['person']['id']).to eq(p1.id)
+        expect(json['person']['first_name']).to eq(first_name)
+        expect(json['person']['last_name']).to eq(p1.last_name)
+        expect(json['person']['year_of_birth']).to eq(p1.year_of_birth)
+        expect(json['person']['identifiers'].to_a.find { |identifier| identifier['value'] == "xanjoo" }).not_to be_nil
+      end
+    end
+
+    context "when full json is provided with identifier data" do
+      it "should update the person but not touch the identifiers or alternative_names" do
+        p1 = people(:person_six)
+        first_name = ''
+# identifiers: [{id: 1,source_name: "xkonto",value: "xbabba"},{id: 2,source_name: "orcid",value: "orcid.org/6666-6666-6666-6666"}],
+        put :update, id: p1.id, person: {first_name: first_name, alternatve_names:[], identifiers: [{id: 1,source_name: "xkonto",value: "xbabba"},{id: 2,source_name: "orcid",value: "orcid.org/6666-6666-6666-6666"}]}
+        expect(response.status).to eq 200
+        expect(json['error']).to be nil
+        expect(json['person']).not_to be nil
+        expect(json['person']['id']).to eq(p1.id)
+        expect(json['person']['first_name']).to eq(first_name)
+        expect(json['person']['last_name']).to eq(p1.last_name)
+        expect(json['person']['year_of_birth']).to eq(p1.year_of_birth)
+        expect(json['person']['identifiers'].to_a.find { |identifier| identifier['value'] == "xanjoo" }).not_to be_nil
       end
     end
   end
