@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   # Generates an error object from code, message and error list
   # If the msg parameter is not provided the HTTP_STATUS message will be used.
   # If no specific HTTP Coce is given then 400, Bad Request will be used.
-  def generate_error(http_code = 400, msg = "", error_list = nil)
+  def generate_error(http_code = 422, msg = "", error_list = nil)
 
     if msg == ""
       msg = code_to_message(http_code)
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
     @response[:error] = {code: http_code, msg: msg, errors: error_list}
   end
 
-  def code_to_message(http_code = 400)
+  def code_to_message(http_code = 422)
     Rack::Utils::HTTP_STATUS_CODES[http_code]
   end
 
