@@ -16,7 +16,7 @@ class SourcesController < ApplicationController
       headers['location'] = "#{url}/#{obj.id}"
       @response[:source] = obj.as_json
     else
-      generate_error(400, "Could not create the source", obj.errors.messages)
+      generate_error(422, "Could not create the source", obj.errors.messages)
     end
     render_json(201)
   end
@@ -43,7 +43,7 @@ class SourcesController < ApplicationController
       if obj.update(parameters.permit(:name))
         @response[:source] = obj.as_json
       else
-        generate_error(400, "Could not update the source", obj.errors.messages)
+        generate_error(422, "Could not update the source", obj.errors.messages)
       end
     else
       generate_error(404, "Could not find the source to update")

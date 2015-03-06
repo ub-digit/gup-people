@@ -183,10 +183,10 @@ RSpec.describe PeopleController, :type => :controller do
         first_name = 'Anders'
         year_of_birth = 1970
         post :create, person: {first_name: first_name, year_of_birth: year_of_birth}
-        expect(response.status).to eq 400
+        expect(response.status).to eq 422
         expect(json['error']).not_to be nil
         expect(json['person']).to be nil
-        expect(json['error']['code']).to eq(400)
+        expect(json['error']['code']).to eq(422)
         expect(json['error']['msg']).to eq("Could not create the person")
       end
     end
@@ -240,10 +240,10 @@ RSpec.describe PeopleController, :type => :controller do
       it "should return an error" do
         last_name = ''
         put :update, id: 1, person: {last_name: last_name}
-        expect(response.status).to eq 400
+        expect(response.status).to eq 422
         expect(json['error']).not_to be nil
         expect(json['person']).to be nil
-        expect(json['error']['code']).to eq(400)
+        expect(json['error']['code']).to eq(422)
         expect(json['error']['msg']).to eq("Could not update the person")
       end
     end

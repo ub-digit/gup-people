@@ -51,7 +51,7 @@ class PeopleController < ApplicationController
       headers['location'] = "#{url}/#{obj.id}"
       @response[:person] = obj.as_json
     else
-      generate_error(400, "Could not create the person", obj.errors.messages)
+      generate_error(422, "Could not create the person", obj.errors.messages)
     end
     render_json(201)
   end
@@ -78,7 +78,7 @@ class PeopleController < ApplicationController
       if obj.update(parameters.permit(:first_name, :last_name, :year_of_birth))
         @response[:person] = obj.as_json
       else
-        generate_error(400, "Could not update the person", obj.errors.messages)
+        generate_error(422, "Could not update the person", obj.errors.messages)
       end
     else
       generate_error(404, "Could not find the person to update")

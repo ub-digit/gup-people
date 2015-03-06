@@ -51,7 +51,7 @@ RSpec.describe SourcesController, :type => :controller do
       it "should return an error" do
         s1 = Source.new
         post :create, source: {}
-        expect(response.status).to eq 400
+        expect(response.status).to eq 422
         expect(json['error']).not_to be nil
         expect(json['source']).to be nil
       end
@@ -113,7 +113,7 @@ RSpec.describe SourcesController, :type => :controller do
         s1 = sources(:xkonto)
         new_name = ''
         put :update, id: s1.id, source: {name: new_name}
-        expect(response.status).to eq 400
+        expect(response.status).to eq 422
         expect(json['error']).not_to be nil
         expect(json['source']).to be nil
         expect(json['error']['msg']).to eq("Could not update the source")
