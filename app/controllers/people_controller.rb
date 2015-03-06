@@ -44,7 +44,7 @@ class PeopleController < ApplicationController
   def create
     person_params = params[:person]
     parameters = ActionController::Parameters.new(person_params)
-    obj = Person.new(parameters.permit(:first_name, :last_name, :year_of_birth))
+    obj = Person.new(parameters.permit(:first_name, :last_name, :year_of_birth, :affiliated))
 
     if obj.save
       url = url_for(controller: 'people', action: 'create', only_path: true)
@@ -75,7 +75,7 @@ class PeopleController < ApplicationController
     obj = Person.find_by id: id
 
     if obj
-      if obj.update(parameters.permit(:first_name, :last_name, :year_of_birth))
+      if obj.update(parameters.permit(:first_name, :last_name, :year_of_birth, :affiliated))
         @response[:person] = obj.as_json
       else
         generate_error(422, "Could not update the person", obj.errors.messages)
