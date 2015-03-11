@@ -1,3 +1,5 @@
+require_relative "../config/environment"
+
 def create_user(first_name, last_name, year_of_birth, affiliated, alternative_names, identifiers)
   person = Person.where(
     first_name: first_name,
