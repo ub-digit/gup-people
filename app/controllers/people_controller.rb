@@ -5,10 +5,23 @@ class PeopleController < ApplicationController
   # search in orcid
   def index
     search_term = params[:search_term] || ''
+    fetch_xkonto = params[:xkonto] || ''
 
     @people = Person.all
 
-    if search_term.present?
+    if fetch_xkonto.present?
+
+      xkonto = fetch_xkonto.downcase
+
+      source_hit = Identifier.where(
+        "lower(value) LIKE ?",
+        "%#{xkonto}%"
+      ).where(source_id: Source.find_by_name("xkonto").id)
+      .select(:person_id)
+
+      @people = @people.where(id: source_hit)
+
+    elsif search_term.present?
       st = search_term.downcase
 
       alternative_name_hit = AlternativeName.where(
