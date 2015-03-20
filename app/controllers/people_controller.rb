@@ -15,7 +15,7 @@ class PeopleController < ApplicationController
 
       source_hit = Identifier.where(
         "lower(value) LIKE ?",
-        "%#{xkonto}%"
+        "#{xkonto}"
       ).where(source_id: Source.find_by_name("xkonto").id)
       .select(:person_id)
 
