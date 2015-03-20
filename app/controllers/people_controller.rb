@@ -60,6 +60,12 @@ class PeopleController < ApplicationController
     obj = Person.new(parameters.permit(:first_name, :last_name, :year_of_birth, :affiliated))
 
     if obj.save
+      if params[:xaccount].present?
+        Identifier.create(person_id: obj.id, source_id: Source.find_by_name('xkonto').id, value: params[:xaccount])
+      end
+      if params[:orcid].present?
+        Identifier.create(person_id: obj.id, source_id: Source.find_by_name('orcid').id, value: params[:orcid])
+      end
       url = url_for(controller: 'people', action: 'create', only_path: true)
       headers['location'] = "#{url}/#{obj.id}"
       @response[:person] = obj.as_json
